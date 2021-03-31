@@ -1,3 +1,2 @@
-ACTIONS = ('like', 'dislike', 'pause', 'play', 'stop',
-           'up', 'down')
+ACTIONS = ('jump', 'liedown', 'pause', 'switch')
 

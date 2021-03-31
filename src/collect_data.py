@@ -1,3 +1,4 @@
+import os
 import time
 import argparse
 import cv2 as cv
@@ -6,11 +7,6 @@ import pandas as pd
 import mediapipe as mp
 from utils.hand import write_landmark_to_csv
 from config import ACTIONS
-
-wait_time = 3 # s
-record_time = 30 # s
-print(f'Start in {wait_time}')
-time.sleep(wait_time)
 
 start_time = time.time()
 
@@ -22,11 +18,24 @@ mp_hands = mp.solutions.hands
 
 parser = argparse.ArgumentParser(description='Input action name.')
 parser.add_argument('--action_name', type=str, choices=ACTIONS)
+parser.add_argument('--data_type', type=str, choices=['train', 'test'])
 args = parser.parse_args()
 action_name = args.action_name
+data_type = args.data_type
+
+# prepare folders
+data_path = '../data'
+data_folder = os.path.join(data_path, data_type)
+if not os.path.exists(data_folder):
+    os.mkdir(data_folder)
 
 # For webcam input:
 cap = cv.VideoCapture(0)
+
+wait_time = 3 # s
+record_time = 30 # s
+print(f'Start in {wait_time}')
+time.sleep(wait_time)
 
 # prepare csv data logfile
 num_points = 21
@@ -50,6 +59,7 @@ with mp_hands.Hands(
     # Flip the image horizontally for a later selfie-view display, and convert
     # the BGR image to RGB.
     image = cv.cvtColor(cv.flip(image, 1), cv.COLOR_BGR2RGB)
+    # _, thresh = cv.threshold(image, thresh=125, maxval=255, type=cv.THRESH_BINARY)
     # To improve performance, optionally mark the image as not writeable to
     # pass by reference.
     image.flags.writeable = False
@@ -74,4 +84,4 @@ with mp_hands.Hands(
 
 cap.release()
 datadf['sign'] = action_labels[action_name]
-datadf.to_csv(f'../data/{action_name}.csv', index=False)
+datadf.to_csv(os.path.join(data_folder, f'{action_name}.csv'), index=False)
