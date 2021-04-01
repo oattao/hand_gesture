@@ -42,17 +42,9 @@ x_train = df_train.values
 y_test = df_test.pop('sign')
 x_test = df_test.values
 
-# Model 1
-print('Training light boost')
-model = LGBMClassifier(n_estimators=10)
-model.fit(x_train, y_train)
-
-y_pred = model.predict(x_test)
-accuracy = accuracy_score(y_test, y_pred)
-print('Accuracy of Light boost: ', accuracy)
-
+# Model
 print('Training random forest')
-model = RandomForestClassifier(n_estimators=10)
+model = RandomForestClassifier(n_estimators=9)
 model.fit(x_train, y_train)
 
 y_pred = model.predict(x_test)

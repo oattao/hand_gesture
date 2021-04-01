@@ -1,2 +1,2 @@
-ACTIONS = ('jump', 'liedown', 'pause', 'switch')
+ACTIONS = ('jump', 'ready')
 

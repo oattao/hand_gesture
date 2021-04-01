@@ -33,7 +33,11 @@ if not os.path.exists(data_folder):
 cap = cv.VideoCapture(0)
 
 wait_time = 3 # s
-record_time = 30 # s
+if data_type == 'train':
+    record_time = 60 # s
+else:
+    record_time = 30
+    
 print(f'Start in {wait_time}')
 time.sleep(wait_time)
 
@@ -74,7 +78,7 @@ with mp_hands.Hands(
             write_landmark_to_csv(hand_landmarks.landmark, datadf)
             mp_drawing.draw_landmarks(nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
     cv.imshow('MediaPipe Hands', nimage)
-    cv.imshow('raw', image)
+    # cv.imshow('raw', image)
     duration = (time.time() - start_time)
     print()
     if duration >= record_time:
