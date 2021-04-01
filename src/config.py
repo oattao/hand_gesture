@@ -1,2 +1,1 @@
 ACTIONS = ('jump', 'ready')
-

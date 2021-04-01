@@ -43,8 +43,11 @@ y_test = df_test.pop('sign')
 x_test = df_test.values
 
 # Model
-print('Training random forest')
-model = RandomForestClassifier(n_estimators=9)
+# print('Training random forest')
+# model = RandomForestClassifier(n_estimators=9)
+# model.fit(x_train, y_train)
+
+model = LGBMClassifier(n_estimators=50)
 model.fit(x_train, y_train)
 
 y_pred = model.predict(x_test)
