@@ -9,7 +9,8 @@ import numpy as np
 import mediapipe as mp
 import pyautogui as pg 
 
-from config import ACTIONS
+from config import ACTIONS, THRESH
+from simple_model import SimpleModel
 
 INTRO_TIME = 3
 W, H = pg.size()
@@ -69,6 +70,7 @@ def play_game():
     action_classes = {i: ACTIONS[i] for i in range(len(ACTIONS))}
     with open('../model/md.pickle', 'rb') as f:
         model = pickle.load(f)
+    # model = SimpleModel(THRESH)
 
     cap = cv.VideoCapture(0)
     mp_drawing = mp.solutions.drawing_utils
@@ -94,19 +96,19 @@ def play_game():
                 for hand_landmarks in results.multi_hand_landmarks:
                     hand = parse_landmark(hand_landmarks.landmark)
                     act = model.predict(hand)[0]
-                    text = action_classes[act]
+                #     text = action_classes[act]
 
-                    if text == 'jump':
-                        pg.press('space')
+                #     if text == 'jump':
+                #         pg.press('space')
 
-                    cv.putText(image, text, (50,50), cv.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2, cv.LINE_AA)
+                #     cv.putText(image, text, (50,50), cv.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2, cv.LINE_AA)
 
-                mp_drawing.draw_landmarks(
-                    nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-            cv.imshow('MediaPipe Hands', nimage)
-            cv.imshow('raw', image)
-            if cv.waitKey(5) & 0xFF == 27:
-                break
+                # mp_drawing.draw_landmarks(
+                #     nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+            # cv.imshow('MediaPipe Hands', nimage)
+            # cv.imshow('raw', image)
+            # if cv.waitKey(5) & 0xFF == 27:
+                # break
 
 def main():
     intro_game()

@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import mediapipe as mp
 from config import ACTIONS
+from simple_model import SimpleModel
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -19,8 +20,9 @@ def parse_landmark(landmark):
     hand = np.expand_dims(hand, 0)
     return hand
 
-with open('../model/md.pickle', 'rb') as f:
-    model = pickle.load(f)
+# with open('../model/md.pickle', 'rb') as f:
+#     model = pickle.load(f)
+model = SimpleModel()
 
 # For webcam input:
 cap = cv.VideoCapture(0)
@@ -51,6 +53,7 @@ with mp_hands.Hands(
     if results.multi_hand_landmarks:
       for hand_landmarks in results.multi_hand_landmarks:
         hand = parse_landmark(hand_landmarks.landmark)
+        # breakpoint()
         act = model.predict(hand)[0]
         text = action_classes[act]
         # print('-'*50)
