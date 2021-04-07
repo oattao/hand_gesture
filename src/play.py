@@ -96,19 +96,19 @@ def play_game():
                 for hand_landmarks in results.multi_hand_landmarks:
                     hand = parse_landmark(hand_landmarks.landmark)
                     act = model.predict(hand)[0]
-                #     text = action_classes[act]
+                    text = action_classes[act]
 
-                #     if text == 'jump':
-                #         pg.press('space')
+                    if text == 'jump':
+                        pg.press('space')
 
-                #     cv.putText(image, text, (50,50), cv.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2, cv.LINE_AA)
+                    cv.putText(nimage, text, (50,50), cv.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 2, cv.LINE_AA)
 
-                # mp_drawing.draw_landmarks(
-                #     nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-            # cv.imshow('MediaPipe Hands', nimage)
+                mp_drawing.draw_landmarks(
+                    nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+            cv.imshow('MediaPipe Hands', nimage)
             # cv.imshow('raw', image)
-            # if cv.waitKey(5) & 0xFF == 27:
-                # break
+            if cv.waitKey(5) & 0xFF == 27:
+                break
 
 def main():
     intro_game()
