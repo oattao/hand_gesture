@@ -103,7 +103,7 @@ def play_game():
                 mp_drawing.draw_landmarks(
                     nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
             cv.imshow('Hand gesture', nimage)
-            # cv.imshow('raw', image)
+            cv.imshow('raw', image)
             if cv.waitKey(5) & 0xFF == 27:
                 break
 
