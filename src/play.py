@@ -10,7 +10,6 @@ import mediapipe as mp
 import pyautogui as pg 
 
 from config import ACTIONS, THRESH
-from simple_model import SimpleModel
 
 INTRO_TIME = 3
 W, H = pg.size()
@@ -56,7 +55,6 @@ def launch_game():
 
 def resume_game():
     pg.click(x=x_m, y=y_m, button='right')
-    # pg.press('space')
 
 def pause_game():
     pg.click(x=-100, y=y_m, button='right')
@@ -70,14 +68,13 @@ def play_game():
     action_classes = {i: ACTIONS[i] for i in range(len(ACTIONS))}
     with open('../model/md.pickle', 'rb') as f:
         model = pickle.load(f)
-    # model = SimpleModel(THRESH)
 
     cap = cv.VideoCapture(0)
     mp_drawing = mp.solutions.drawing_utils
     mp_hands = mp.solutions.hands
     with mp_hands.Hands(max_num_hands=1,
-                        min_detection_confidence=0.6,
-                        min_tracking_confidence=0.6) as hands:
+                        min_detection_confidence=0.55,
+                        min_tracking_confidence=0.55) as hands:
         while cap.isOpened():                                             
             success, image = cap.read()
             if not success:
@@ -105,16 +102,16 @@ def play_game():
 
                 mp_drawing.draw_landmarks(
                     nimage, hand_landmarks, mp_hands.HAND_CONNECTIONS)
-            cv.imshow('MediaPipe Hands', nimage)
+            cv.imshow('Hand gesture', nimage)
             # cv.imshow('raw', image)
             if cv.waitKey(5) & 0xFF == 27:
                 break
 
 def main():
-    intro_game()
-    launch_game()
+    # intro_game()
+    # launch_game()
     play_game()
-    exit_game()
+    # exit_game()
 
 if __name__ == '__main__':
     main()
