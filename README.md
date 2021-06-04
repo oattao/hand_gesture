@@ -1,5 +1,4 @@
-# hand_gesture
-Play dino game by hand gestures.
+# Play dino game by hand gestures.
 Demo video: https://www.youtube.com/watch?v=OXdbaoGOrjc
 
 [![IMAGE ALT TEXT](http://img.youtube.com/vi/OXdbaoGOrjc/0.jpg)](http://www.youtube.com/watch?v=OXdbaoGOrjc "Video Title")
